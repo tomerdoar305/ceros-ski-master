@@ -8,11 +8,21 @@ export class Skier extends Entity {
   direction = Constants.SKIER_DIRECTIONS.DOWN;
   speed = Constants.SKIER_STARTING_SPEED;
 
+  //.....Added by Tomer 5/14....
+  jumpDirection = Constants.SKIER_DIRECTIONS.DOWN; //init jump direction start
+  skierDistanceCounter = 0; //Counter the skier sking till he gets caught by rhino
+  jumpCounter = 0; //Counter for skier jump
+  catchByRhinoCounter = 0; //Counter for the skier getting eaten by rhino
+  crashingRecordCounter = 0; //Counter that count the times that the skier get crashed
+  lastCrash = null; //Record for the last collision that cause the skier to get crashed
+  //............................
+
   constructor(x, y) {
     super(x, y);
   }
 
   setDirection(direction) {
+    console.log("direction: ", direction);
     this.direction = direction;
     this.updateAsset();
   }
@@ -31,6 +41,29 @@ export class Skier extends Entity {
         break;
       case Constants.SKIER_DIRECTIONS.RIGHT_DOWN:
         this.moveSkierRightDown();
+        break;
+      //.....Added by Tomer 5/14..........
+      case Constants.SKIER_DIRECTIONS.JUMP:
+        if (0 <= this.jumpCounter && this.jumpCounter < 20) {
+          this.setSkierToTheRightDirectionOnJump(false);
+          this.assetName = Constants.SKIER_JUMP_2;
+          this.jumpCounter++;
+        } else if (20 <= this.jumpCounter && this.jumpCounter < 30) {
+          this.setSkierToTheRightDirectionOnJump(false);
+          this.assetName = Constants.SKIER_JUMP_3;
+          this.jumpCounter++;
+        } else if (30 <= this.jumpCounter && this.jumpCounter < 40) {
+          this.setSkierToTheRightDirectionOnJump(false);
+          this.assetName = Constants.SKIER_JUMP_4;
+          this.jumpCounter++;
+        } else if (40 <= this.jumpCounter && this.jumpCounter < 50) {
+          this.setSkierToTheRightDirectionOnJump(false);
+          this.assetName = Constants.SKIER_JUMP_5;
+          this.jumpCounter++;
+        } else {
+          this.jumpCounter = 0;
+          this.setSkierToTheRightDirectionOnJump(true);
+        }
         break;
     }
   }
@@ -62,23 +95,27 @@ export class Skier extends Entity {
   }
 
   turnLeft() {
-    if (this.direction === Constants.SKIER_DIRECTIONS.LEFT) {
-      this.moveSkierLeft();
-    } else {
-      if (this.direction == Constants.SKIER_DIRECTIONS.CRASH) {
-        this.moveSkierDownAfterCrashing();
-        this.setDirection(Constants.SKIER_DIRECTIONS.LEFT);
+    if (this.jumpCounter === 0) {
+      if (this.direction === Constants.SKIER_DIRECTIONS.LEFT) {
+        this.moveSkierLeft();
       } else {
-        this.setDirection(this.direction - 1);
+        if (this.direction == Constants.SKIER_DIRECTIONS.CRASH) {
+          this.moveSkierDownAfterCrashing();
+          this.setDirection(Constants.SKIER_DIRECTIONS.LEFT);
+        } else {
+          this.setDirection(this.direction - 1);
+        }
       }
     }
   }
 
   turnRight() {
-    if (this.direction === Constants.SKIER_DIRECTIONS.RIGHT) {
-      this.moveSkierRight();
-    } else {
-      this.setDirection(this.direction + 1);
+    if (this.jumpCounter === 0) {
+      if (this.direction === Constants.SKIER_DIRECTIONS.RIGHT) {
+        this.moveSkierRight();
+      } else {
+        this.setDirection(this.direction + 1);
+      }
     }
   }
 
@@ -92,7 +129,9 @@ export class Skier extends Entity {
   }
 
   turnDown() {
-    this.setDirection(Constants.SKIER_DIRECTIONS.DOWN);
+    if (this.jumpCounter === 0) {
+      this.setDirection(Constants.SKIER_DIRECTIONS.DOWN);
+    }
   }
 
   checkIfSkierHitObstacle(obstacleManager, assetManager) {
@@ -119,12 +158,40 @@ export class Skier extends Entity {
 
     if (collision) {
       this.setDirection(Constants.SKIER_DIRECTIONS.CRASH);
+      this.jumpCounter = 0;
     }
   }
 
   //Added by Tomer 8/17.....
   moveSkierDownAfterCrashing() {
     this.y += Constants.SKIER_MOVING_FORWARD_DISTANCE_AFTER_CRASHING;
+  }
+
+  jump() {
+    console.log("JUMP JUMP... ");
+    if (
+      this.jumpCounter == 0 &&
+      this.direction != Constants.SKIER_DIRECTIONS.CRASH
+    ) {
+      this.setJumpDirection(this.direction);
+      this.setDirection(Constants.SKIER_DIRECTIONS.JUMP);
+    }
+  }
+  setJumpDirection(direction) {
+    this.jumpDirection = direction;
+  }
+
+  setSkierToTheRightDirectionOnJump(endjump) {
+    if (this.jumpDirection == Constants.SKIER_DIRECTIONS.LEFT_DOWN) {
+      this.moveSkierLeftDown();
+    } else if (this.jumpDirection == Constants.SKIER_DIRECTIONS.RIGHT_DOWN) {
+      this.moveSkierRightDown();
+    } else {
+      this.moveSkierDown();
+    }
+    if (endjump) {
+      this.setDirection(this.jumpDirection);
+    }
   }
   //........................
 }

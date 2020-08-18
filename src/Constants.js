@@ -19,6 +19,14 @@ export const SKIER_DIAGONAL_SPEED_REDUCER = 1.4142;
 export const SKIER_TIMER_VALUE_FOR_RHINO_TO_APPEAR = 500;
 export const SKIER_MOVING_FORWARD_DISTANCE_AFTER_CRASHING = 30;
 
+export const JUMP_RAMP = 'jumpRamp';
+export const SKIER_JUMP_1 = 'skierJump1';
+export const SKIER_JUMP_2 = 'skierJump2';
+export const SKIER_JUMP_3 = 'skierJump3';
+export const SKIER_JUMP_4 = 'skierJump4';
+export const SKIER_JUMP_5 = 'skierJump5';
+//..........................
+
 export const ASSETS = {
   [SKIER_CRASH]: "img/skier_crash.png",
   [SKIER_LEFT]: "img/skier_left.png",
