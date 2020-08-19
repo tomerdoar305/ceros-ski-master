@@ -3,6 +3,7 @@ import { AssetManager } from "./AssetManager";
 import { Canvas } from "./Canvas";
 import { Skier } from "../Entities/Skier";
 import { ObstacleManager } from "../Entities/Obstacles/ObstacleManager";
+import { RhinoManager } from "../Entities/Rhinos/RhinoManager";
 import { Rect } from "./Utils";
 
 export class Game {
@@ -13,6 +14,7 @@ export class Game {
     this.canvas = new Canvas(Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
     this.skier = new Skier(0, 0);
     this.obstacleManager = new ObstacleManager();
+    this.rhinoManager = new RhinoManager();
 
     document.addEventListener("keydown", this.handleKeyDown.bind(this));
   }
@@ -30,7 +32,6 @@ export class Game {
 
     this.updateGameWindow();
     this.drawGameWindow();
-
     requestAnimationFrame(this.run.bind(this));
   }
 
@@ -38,9 +39,16 @@ export class Game {
     this.skier.move();
 
     const previousGameWindow = this.gameWindow;
+
     this.calculateGameWindow();
 
     this.obstacleManager.placeNewObstacle(this.gameWindow, previousGameWindow);
+
+    this.rhinoManager.placeNewRhinoOrMoveExistingRhinos(
+      this.skier,
+      this.gameWindow,
+      previousGameWindow
+    );
 
     this.skier.checkIfSkierHitObstacle(this.obstacleManager, this.assetManager);
   }
@@ -50,6 +58,7 @@ export class Game {
 
     this.skier.draw(this.canvas, this.assetManager);
     this.obstacleManager.drawObstacles(this.canvas, this.assetManager);
+    this.rhinoManager.drawRhinos(this.canvas, this.assetManager);
   }
 
   calculateGameWindow() {

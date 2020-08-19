@@ -50,28 +50,34 @@ export class Skier extends Entity {
 
   moveSkierLeft() {
     this.x -= Constants.SKIER_STARTING_SPEED;
+    this.increaseSkierDistanceCounter();
   }
 
   moveSkierLeftDown() {
     this.x -= this.speed / Constants.SKIER_DIAGONAL_SPEED_REDUCER;
     this.y += this.speed / Constants.SKIER_DIAGONAL_SPEED_REDUCER;
+    this.increaseSkierDistanceCounter();
   }
 
   moveSkierDown() {
     this.y += this.speed;
+    this.increaseSkierDistanceCounter();
   }
 
   moveSkierRightDown() {
     this.x += this.speed / Constants.SKIER_DIAGONAL_SPEED_REDUCER;
     this.y += this.speed / Constants.SKIER_DIAGONAL_SPEED_REDUCER;
+    this.increaseSkierDistanceCounter();
   }
 
   moveSkierRight() {
     this.x += Constants.SKIER_STARTING_SPEED;
+    this.increaseSkierDistanceCounter();
   }
 
   moveSkierUp() {
     this.y -= Constants.SKIER_STARTING_SPEED;
+    this.increaseSkierDistanceCounter();
   }
 
   turnLeft() {
@@ -161,12 +167,16 @@ export class Skier extends Entity {
   }
 
   //Added by Tomer 8/17.....
+  increaseSkierDistanceCounter(){       
+    this.skierDistanceCounter++;                        
+}
+
   moveSkierDownAfterCrashing() {
     this.y += Constants.SKIER_MOVING_FORWARD_DISTANCE_AFTER_CRASHING;
+    this.increaseSkierDistanceCounter();
   }
 
   jump() {
-    console.log("JUMP JUMP... ");
     if (
       this.jumpCounter === 0 &&
       this.direction !== Constants.SKIER_DIRECTIONS.CRASH

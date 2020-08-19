@@ -16,15 +16,25 @@ export const SKIER_STARTING_SPEED = 10;
 export const SKIER_DIAGONAL_SPEED_REDUCER = 1.4142;
 
 //...Added by Tomer 5/14....
-export const SKIER_TIMER_VALUE_FOR_RHINO_TO_APPEAR = 500;
+export const SKIER_DISTANCE_SKING_VALUE_FOR_RHINO_TO_APPEAR = 500;
 export const SKIER_MOVING_FORWARD_DISTANCE_AFTER_CRASHING = 30;
 
-export const JUMP_RAMP = 'jumpRamp';
-export const SKIER_JUMP_1 = 'skierJump1';
-export const SKIER_JUMP_2 = 'skierJump2';
-export const SKIER_JUMP_3 = 'skierJump3';
-export const SKIER_JUMP_4 = 'skierJump4';
-export const SKIER_JUMP_5 = 'skierJump5';
+export const JUMP_RAMP = "jumpRamp";
+export const SKIER_JUMP_1 = "skierJump1";
+export const SKIER_JUMP_2 = "skierJump2";
+export const SKIER_JUMP_3 = "skierJump3";
+export const SKIER_JUMP_4 = "skierJump4";
+export const SKIER_JUMP_5 = "skierJump5";
+
+export const RHINO_DEFAULT = "rhinoDefault";
+export const RHINO_LIFT_EAT_1 = "rhinoLiftEat1";
+export const RHINO_LIFT_EAT_2 = "rhinoLiftEat2";
+export const RHINO_LIFT_EAT_3 = "rhinoLiftEat3";
+export const RHINO_LIFT_EAT_4 = "rhinoLiftEat4";
+export const RHINO_LIFT_MOUTH_OPEN = "rhinoLiftMouthOpen";
+export const RHINO_LIFT = "rhinoLift";
+export const RHINO_RUN_LEFT = "rhinoRunLeft";
+export const RHINO_RUN_LEFT_2 = "rhinoRunLeft2";
 //..........................
 
 export const ASSETS = {
@@ -46,6 +56,16 @@ export const ASSETS = {
   [SKIER_JUMP_3]: "img/skier_jump_3.png",
   [SKIER_JUMP_4]: "img/skier_jump_4.png",
   [SKIER_JUMP_5]: "img/skier_jump_5.png",
+
+  [RHINO_DEFAULT]: "img/rhino_default.png",
+  [RHINO_LIFT_EAT_1]: "img/rhino_lift_eat_1.png",
+  [RHINO_LIFT_EAT_2]: "img/rhino_lift_eat_2.png",
+  [RHINO_LIFT_EAT_3]: "img/rhino_lift_eat_3.png",
+  [RHINO_LIFT_EAT_4]: "img/rhino_lift_eat_4.png",
+  [RHINO_LIFT_MOUTH_OPEN]: "img/rhino_lift_mouth_open.png",
+  [RHINO_LIFT]: "img/rhino_lift.png",
+  [RHINO_RUN_LEFT]: "img/rhino_run_left.png",
+  [RHINO_RUN_LEFT_2]: "img/rhino_run_left_2.png",
 };
 
 export const SKIER_DIRECTIONS = {
