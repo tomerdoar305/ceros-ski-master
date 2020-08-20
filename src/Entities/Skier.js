@@ -8,13 +8,10 @@ export class Skier extends Entity {
   direction = Constants.SKIER_DIRECTIONS.DOWN;
   speed = Constants.SKIER_STARTING_SPEED;
 
-  //.....Added by Tomer 5/14....
+  // Added by Tomer.............
   jumpDirection = Constants.SKIER_DIRECTIONS.DOWN; //init jump direction start
   skierDistanceCounter = 0; //Counter the skier sking till he gets caught by rhino
-  jumpCounter = 0; //Counter for skier jump
-  catchByRhinoCounter = 0; //Counter for the skier getting eaten by rhino
-  crashingRecordCounter = 0; //Counter that count the times that the skier get crashed
-  lastCrash = null; //Record for the last collision that cause the skier to get crashed
+  jumpCounter = 0; //Counter for skier jump  
   //............................
 
   constructor(x, y) {

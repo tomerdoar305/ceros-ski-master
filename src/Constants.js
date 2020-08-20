@@ -49,7 +49,7 @@ export const ASSETS = {
   [ROCK1]: "img/rock_1.png",
   [ROCK2]: "img/rock_2.png",
 
-  //Added by Tomer 8/17
+  //Added by Tomer.......
   [JUMP_RAMP]: "img/jump_ramp.png",
   [SKIER_JUMP_1]: "img/skier_jump_1.png",
   [SKIER_JUMP_2]: "img/skier_jump_2.png",
@@ -66,6 +66,7 @@ export const ASSETS = {
   [RHINO_LIFT]: "img/rhino_lift.png",
   [RHINO_RUN_LEFT]: "img/rhino_run_left.png",
   [RHINO_RUN_LEFT_2]: "img/rhino_run_left_2.png",
+  //......................
 };
 
 export const SKIER_DIRECTIONS = {
@@ -76,9 +77,9 @@ export const SKIER_DIRECTIONS = {
   RIGHT_DOWN: 4,
   RIGHT: 5,
 
-  //.....Added by Tomer 5/14....
+  // Added by Tomer....
   JUMP: 6,
-  //............................
+  //...................
 };
 
 export const SKIER_DIRECTION_ASSET = {
@@ -89,9 +90,9 @@ export const SKIER_DIRECTION_ASSET = {
   [SKIER_DIRECTIONS.RIGHT_DOWN]: SKIER_RIGHTDOWN,
   [SKIER_DIRECTIONS.RIGHT]: SKIER_RIGHT,
 
-  //...Added by Tomer 8/17.....
+  //Added by Tomer.....
   [SKIER_DIRECTIONS.JUMP]: SKIER_JUMP_1,
-  //............................
+  //...................
 };
 
 export const KEYS = {
@@ -100,8 +101,8 @@ export const KEYS = {
   UP: 38,
   DOWN: 40,
 
-  //...Added by Tomer 8/17.....
+  //...Added by Tomer.....
   JUMP: 32,
   RESET_GAME: 27,
-  //............................
+  //......................
 };

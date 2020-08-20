@@ -29,7 +29,6 @@ export class Game {
 
   run() {
     this.canvas.clearCanvas();
-
     this.updateGameWindow();
     this.drawGameWindow();
     requestAnimationFrame(this.run.bind(this));
@@ -37,13 +36,11 @@ export class Game {
 
   updateGameWindow() {
     this.skier.move();
-
     const previousGameWindow = this.gameWindow;
-
     this.calculateGameWindow();
-
     this.obstacleManager.placeNewObstacle(this.gameWindow, previousGameWindow);
 
+    //This is a call to place new rhino or to move existing rhinos in the screen
     this.rhinoManager.placeNewRhinoOrMoveExistingRhinos(
       this.skier,
       this.gameWindow,
@@ -51,7 +48,12 @@ export class Game {
     );
 
     this.skier.checkIfSkierHitObstacle(this.obstacleManager, this.assetManager);
-    this.skier.checkIfSkierGetCaughtByRhino(this.rhinoManager, this.assetManager);
+
+    //This is a call to check if skier got caught by rhino
+    this.skier.checkIfSkierGetCaughtByRhino(
+      this.rhinoManager,
+      this.assetManager
+    );
   }
 
   drawGameWindow() {
@@ -93,7 +95,8 @@ export class Game {
         this.skier.turnDown();
         event.preventDefault();
         break;
-      //...Added by Tomer 8/17............
+
+      // Added by Tomer.........
       case Constants.KEYS.JUMP:
         this.skier.jump();
         event.preventDefault();
@@ -101,7 +104,23 @@ export class Game {
       case Constants.KEYS.RESET_GAME:
         this.resetGame();
         break;
-      //.................................
+      //..........................
     }
   }
+
+  // Added by Tomer............
+  resetGame() {
+    this.skier.assetName = Constants.SKIER_DOWN;
+    this.skier.direction = Constants.SKIER_DIRECTIONS.DOWN;
+    this.skier.speed = Constants.SKIER_STARTING_SPEED;
+    this.skier.jumpDirection = Constants.SKIER_DIRECTIONS.DOWN;
+    this.skier.skierDistanceCounter = 0;
+    this.skier.jumpCounter = 0;
+    this.skier.x = 0;
+    this.skier.y = 0;
+    this.obstacleManager.rhinos = [];
+    this.obstacleManager.obstacles = [];
+    this.obstacleManager.placeInitialObstacles();
+  }
+  //..............................
 }
