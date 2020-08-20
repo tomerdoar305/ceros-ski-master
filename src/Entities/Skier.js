@@ -167,9 +167,9 @@ export class Skier extends Entity {
   }
 
   //Added by Tomer 8/17.....
-  increaseSkierDistanceCounter(){       
-    this.skierDistanceCounter++;                        
-}
+  increaseSkierDistanceCounter() {
+    this.skierDistanceCounter++;
+  }
 
   moveSkierDownAfterCrashing() {
     this.y += Constants.SKIER_MOVING_FORWARD_DISTANCE_AFTER_CRASHING;
@@ -231,6 +231,34 @@ export class Skier extends Entity {
           this.setDirection(this.jumpDirection);
           break;
       }
+    }
+  }
+
+  checkIfSkierGetCatchedByRhino(rhinoManager, assetManager) {
+    const asset = assetManager.getAsset(this.assetName);
+    const skierBounds = new Rect(
+      this.x - asset.width / 2,
+      this.y - asset.height / 2,
+      this.x + asset.width / 2,
+      this.y - asset.height / 4
+    );
+
+    const collision = rhinoManager.getRhinos().find((rhino) => {
+      const rhinoAsset = assetManager.getAsset(rhino.getAssetName());
+      const rhinoPosition = rhino.getPosition();
+      const rhinoBounds = new Rect(
+        rhinoPosition.x - rhinoAsset.width / 2,
+        rhinoPosition.y - rhinoAsset.height / 2,
+        rhinoPosition.x + rhinoAsset.width / 2,
+        rhinoPosition.y
+      );
+
+      return intersectTwoRects(skierBounds, rhinoBounds);
+    });
+
+    if (collision) {
+      console.log("Skier Get Catched By Rhino");
+      collision.changeRhinoCatchesSkierAsset();
     }
   }
   //........................

@@ -16,15 +16,13 @@ export class RhinoManager {
 
   drawRhinos(canvas, assetManager) {
     this.rhinos.forEach((rhino) => {
-        rhino.draw(canvas, assetManager);
-    });      
-}
+      rhino.draw(canvas, assetManager);
+    });
+  }
 
   //Placing a new Rhino if there are no Rhinos in the Game Window.
   //If there are Rhinos in the Game Window, moving them closer to the skier.
   placeNewRhinoOrMoveExistingRhinos(skier, gameWindow, previousGameWindow) {
-
-
     if (
       skier.skierDistanceCounter <
       Constants.SKIER_DISTANCE_SKING_VALUE_FOR_RHINO_TO_APPEAR
@@ -108,14 +106,18 @@ export class RhinoManager {
     for (var rhino of rhinosInTheGameWindow) {
       if (skier.getPosition().x > rhino.x) {
         rhino.x += 2;
+        rhino.changeRhinoRunningAsset();
       } else if (skier.getPosition().x < rhino.x) {
         rhino.x -= 2;
+        rhino.changeRhinoRunningAsset();
       }
 
       if (skier.getPosition().y > rhino.y) {
         rhino.y += 2;
+        rhino.changeRhinoRunningAsset();
       } else if (skier.getPosition().y < rhino.y) {
         rhino.y -= 2;
+        rhino.changeRhinoRunningAsset();
       }
 
       if (
@@ -131,6 +133,7 @@ export class RhinoManager {
       ) {
         rhino.y = skier.getPosition().y;
       }
+      
     }
   }
 
@@ -139,22 +142,21 @@ export class RhinoManager {
     const y = randomInt(minY, maxY);
 
     const foundCollision = this.rhinos.find((rhino) => {
-        return (
-            x > (rhino.x - DISTANCE_BETWEEN_RHINOS) &&
-            x < (rhino.x + DISTANCE_BETWEEN_RHINOS) &&
-            y > (rhino.y - DISTANCE_BETWEEN_RHINOS) &&
-            y < (rhino.y + DISTANCE_BETWEEN_RHINOS)
-        );
+      return (
+        x > rhino.x - DISTANCE_BETWEEN_RHINOS &&
+        x < rhino.x + DISTANCE_BETWEEN_RHINOS &&
+        y > rhino.y - DISTANCE_BETWEEN_RHINOS &&
+        y < rhino.y + DISTANCE_BETWEEN_RHINOS
+      );
     });
 
-    if(foundCollision) {
-        return this.calculateOpenPosition(minX, maxX, minY, maxY);
+    if (foundCollision) {
+      return this.calculateOpenPosition(minX, maxX, minY, maxY);
+    } else {
+      return {
+        x: x,
+        y: y,
+      };
     }
-    else {
-        return {
-            x: x,
-            y: y
-        };
-    }
-}
+  }
 }
