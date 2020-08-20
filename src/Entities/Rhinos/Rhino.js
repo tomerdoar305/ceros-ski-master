@@ -19,8 +19,13 @@ export class Rhino extends Entity {
   constructor(x, y) {
     super(x, y);
 
+    this.move = true;
     this.assetName = Constants.RHINO_DEFAULT;
     this.changeRhinoAssetCounter = 0;
+  }
+
+  changeRhinoToDefaultAsset(){
+    this.assetName = Constants.RHINO_DEFAULT;
   }
 
   changeRhinoRunningAsset() {
@@ -64,6 +69,7 @@ export class Rhino extends Entity {
       this.changeRhinoAssetCounter++;
     } else {
       this.assetName = assetCatchSkierTypes[5];
+      this.move = false;
     }
   }
 }

@@ -51,7 +51,7 @@ export class Game {
     );
 
     this.skier.checkIfSkierHitObstacle(this.obstacleManager, this.assetManager);
-    this.skier.checkIfSkierGetCatchedByRhino(this.rhinoManager, this.assetManager);
+    this.skier.checkIfSkierGetCaughtByRhino(this.rhinoManager, this.assetManager);
   }
 
   drawGameWindow() {

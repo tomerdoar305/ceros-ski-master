@@ -234,7 +234,7 @@ export class Skier extends Entity {
     }
   }
 
-  checkIfSkierGetCatchedByRhino(rhinoManager, assetManager) {
+  checkIfSkierGetCaughtByRhino(rhinoManager, assetManager) {
     const asset = assetManager.getAsset(this.assetName);
     const skierBounds = new Rect(
       this.x - asset.width / 2,
@@ -243,7 +243,7 @@ export class Skier extends Entity {
       this.y - asset.height / 4
     );
 
-    const collision = rhinoManager.getRhinos().find((rhino) => {
+    const rhinoThatCaughtTheSkier = rhinoManager.getRhinos().find((rhino) => {
       const rhinoAsset = assetManager.getAsset(rhino.getAssetName());
       const rhinoPosition = rhino.getPosition();
       const rhinoBounds = new Rect(
@@ -256,9 +256,10 @@ export class Skier extends Entity {
       return intersectTwoRects(skierBounds, rhinoBounds);
     });
 
-    if (collision) {
+    if (rhinoThatCaughtTheSkier) {
       console.log("Skier Get Catched By Rhino");
-      collision.changeRhinoCatchesSkierAsset();
+      rhinoThatCaughtTheSkier.changeRhinoCatchesSkierAsset();
+      rhinoManager.stopRhinosRunning(rhinoThatCaughtTheSkier);
     }
   }
   //........................

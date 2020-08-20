@@ -104,36 +104,37 @@ export class RhinoManager {
   //Navigate the Rhinis on the Game Window to run after the skier and catch him
   moveRhinosCloserToSkier(rhinosInTheGameWindow, skier) {
     for (var rhino of rhinosInTheGameWindow) {
-      if (skier.getPosition().x > rhino.x) {
-        rhino.x += 2;
-        rhino.changeRhinoRunningAsset();
-      } else if (skier.getPosition().x < rhino.x) {
-        rhino.x -= 2;
-        rhino.changeRhinoRunningAsset();
-      }
+      if (rhino.move) {
+        if (skier.getPosition().x > rhino.x) {
+          rhino.x += 2;
+          rhino.changeRhinoRunningAsset();
+        } else if (skier.getPosition().x < rhino.x) {
+          rhino.x -= 2;
+          rhino.changeRhinoRunningAsset();
+        }
 
-      if (skier.getPosition().y > rhino.y) {
-        rhino.y += 2;
-        rhino.changeRhinoRunningAsset();
-      } else if (skier.getPosition().y < rhino.y) {
-        rhino.y -= 2;
-        rhino.changeRhinoRunningAsset();
-      }
+        if (skier.getPosition().y > rhino.y) {
+          rhino.y += 2;
+          rhino.changeRhinoRunningAsset();
+        } else if (skier.getPosition().y < rhino.y) {
+          rhino.y -= 2;
+          rhino.changeRhinoRunningAsset();
+        }
 
-      if (
-        skier.getPosition().x - rhino.x <= 2 &&
-        skier.getPosition().x - rhino.x >= -2
-      ) {
-        rhino.x = skier.getPosition().x;
-      }
+        if (
+          skier.getPosition().x - rhino.x <= 2 &&
+          skier.getPosition().x - rhino.x >= -2
+        ) {
+          rhino.x = skier.getPosition().x;
+        }
 
-      if (
-        skier.getPosition().y - rhino.y <= 2 &&
-        skier.getPosition().y - rhino.y >= -2
-      ) {
-        rhino.y = skier.getPosition().y;
+        if (
+          skier.getPosition().y - rhino.y <= 2 &&
+          skier.getPosition().y - rhino.y >= -2
+        ) {
+          rhino.y = skier.getPosition().y;
+        }
       }
-      
     }
   }
 
@@ -158,5 +159,14 @@ export class RhinoManager {
         y: y,
       };
     }
+  }
+
+  stopRhinosRunning(rhinoThatCaughtTheSkier) {
+    this.rhinos.map((rhino) => {
+      if (rhino !== rhinoThatCaughtTheSkier) {
+        rhino.changeRhinoToDefaultAsset();
+        rhino.move = false;
+      }
+    });
   }
 }
