@@ -9,9 +9,9 @@ export class Skier extends Entity {
   speed = Constants.SKIER_STARTING_SPEED;
 
   // Added by Tomer.............
-  jumpDirection = Constants.SKIER_DIRECTIONS.DOWN; //init jump direction start
-  skierDistanceCounter = 0; //Counter the skier sking till he gets caught by rhino
-  jumpCounter = 0; //Counter for skier jump  
+  jumpDirection = Constants.SKIER_DIRECTIONS.DOWN; //Init jump direction start
+  skierDistanceCounter = 0; //Counter distance for the skier 
+  jumpCounter = 0; //Counter for skier jump
   //............................
 
   constructor(x, y) {
@@ -38,10 +38,11 @@ export class Skier extends Entity {
       case Constants.SKIER_DIRECTIONS.RIGHT_DOWN:
         this.moveSkierRightDown();
         break;
-      //.....Added by Tomer 8/17..........
+      // Added by Tomer.........
       case Constants.SKIER_DIRECTIONS.JUMP:
         this.setJumpPosition();
         break;
+      //........................
     }
   }
 
@@ -77,6 +78,11 @@ export class Skier extends Entity {
     this.increaseSkierDistanceCounter();
   }
 
+  /*
+    This function move the skier to the left only if the skier is not in jumping position 
+    (because he cant move left if he is in the air).
+    It also checks if the skier is in crash position (that is the bug that needed to be fixed).
+  */
   turnLeft() {
     if (this.direction !== Constants.SKIER_DIRECTIONS.JUMP) {
       if (this.direction === Constants.SKIER_DIRECTIONS.LEFT) {
@@ -88,10 +94,14 @@ export class Skier extends Entity {
         } else {
           this.setDirection(this.direction - 1);
         }
-      }
+      } 
     }
   }
 
+  /*
+    This function move the skier to the right only if the skier is not in jumping position 
+    (because he cant move right if he is in the air).
+  */
   turnRight() {
     if (this.direction !== Constants.SKIER_DIRECTIONS.JUMP) {
       if (this.direction === Constants.SKIER_DIRECTIONS.RIGHT) {
@@ -111,6 +121,10 @@ export class Skier extends Entity {
     }
   }
 
+  /*
+    This function move the skier down only if the skier is not in jumping position 
+    (because he cant move to diffrent directions if he is in the air).
+  */
   turnDown() {
     if (this.direction !== Constants.SKIER_DIRECTIONS.JUMP) {
       this.setDirection(Constants.SKIER_DIRECTIONS.DOWN);
@@ -155,7 +169,7 @@ export class Skier extends Entity {
       ) {
         return;
       }
-      // Case that the skier is hitting a Obstacle
+      // Case that the skier is hitting a Obstacle (trees or rocks)
       else if (collision.assetName !== Constants.JUMP_RAMP) {
         this.setDirection(Constants.SKIER_DIRECTIONS.CRASH);
         this.jumpCounter = 0;
@@ -163,16 +177,21 @@ export class Skier extends Entity {
     }
   }
 
-  //Added by Tomer 8/17.....
+  //This is a function that count the distance of the skier.
   increaseSkierDistanceCounter() {
     this.skierDistanceCounter++;
   }
 
+  //This is a function that move the skier down after he got crashed by a rock or a tree
   moveSkierDownAfterCrashing() {
     this.y += Constants.SKIER_MOVING_FORWARD_DISTANCE_AFTER_CRASHING;
     this.increaseSkierDistanceCounter();
   }
 
+  /* 
+   This is a finction that getting execute when the jump key is pressed.
+   It only get execute if the skier is not in jumping process and not crashed. 
+  */
   jump() {
     if (
       this.jumpCounter === 0 &&
