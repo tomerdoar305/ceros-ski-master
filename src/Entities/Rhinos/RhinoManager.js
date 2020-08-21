@@ -1,9 +1,10 @@
 import * as Constants from "../../Constants";
-import { randomInt } from "../../Core/Utils";
+import { randomInt, calculateOpenPosition } from "../../Core/Utils";
 import { Rhino } from "./Rhino";
 
 const DISTANCE_BETWEEN_RHINOS = 50;
-const NEW_OBSTACLE_RHINO_REDUCER = 300;
+const NEW_OBSTACLE_RHINO_REDUCER = 150;
+const RHINO_RUNNING_SPEED = 2;
 
 export class RhinoManager {
   rhinos = [];
@@ -20,8 +21,10 @@ export class RhinoManager {
     });
   }
 
-  //Placing a new Rhino if there are no Rhinos in the Game Window.
-  //If there are Rhinos in the Game Window, moving them closer to the skier.
+  /* 
+    Placing a new Rhino if there are no Rhinos in the Game Window.
+    If there are Rhinos in the Game Window, moving them closer to the skier.
+  */  
   placeNewRhinoOrMoveExistingRhinos(skier, gameWindow, previousGameWindow) {
     if (
       skier.skierDistanceCounter <
@@ -33,10 +36,10 @@ export class RhinoManager {
     const rhinosInTheGameWindow = this.checkIfThereIsRhinoInTheGameWindow(
       gameWindow
     );
-    const shouldPlaceObstacle = randomInt(1, NEW_OBSTACLE_RHINO_REDUCER);
+    const shouldPlaceRhino = randomInt(1, NEW_OBSTACLE_RHINO_REDUCER);
     if (
       rhinosInTheGameWindow.length == 0 &&
-      shouldPlaceObstacle == NEW_OBSTACLE_RHINO_REDUCER
+      shouldPlaceRhino == NEW_OBSTACLE_RHINO_REDUCER
     ) {
       if (gameWindow.left < previousGameWindow.left) {
         this.placeRandomRhino(
@@ -73,17 +76,26 @@ export class RhinoManager {
     }
   }
 
-  //Placing a new Rhino in the Game Window and by adding it to the
-  //obstacles list
+  /* 
+    Placing a new Rhino in the Game Window and by creating on and adding it to the rhinos list
+  */
   placeRandomRhino(minX, maxX, minY, maxY) {
-    const position = this.calculateOpenPosition(minX, maxX, minY, maxY);
+    const position = calculateOpenPosition(
+      minX,
+      maxX,
+      minY,
+      maxY,
+      this.rhinos,
+      DISTANCE_BETWEEN_RHINOS
+    );
     const newRhino = new Rhino(position.x, position.y);
 
     this.rhinos.push(newRhino);
   }
 
-  //Check if there is one or more Rhino in the Game Window
-  //Return a list of the Rhino that were found in the Game Window
+  /* 
+    Return a list of the Rhino that were found in the Game Window
+  */
   checkIfThereIsRhinoInTheGameWindow(gameWindow) {
     if (this.rhinos.length == 0) {
       return [];
@@ -101,23 +113,25 @@ export class RhinoManager {
     return rhinosInTheWindowGame;
   }
 
-  //Navigate the Rhinis on the Game Window to run after the skier and catch him
+  /* 
+    Navigate the Rhinos on the Game Window to run after the skier and catch him
+  */
   moveRhinosCloserToSkier(rhinosInTheGameWindow, skier) {
     for (var rhino of rhinosInTheGameWindow) {
       if (rhino.move) {
         if (skier.getPosition().x > rhino.x) {
-          rhino.x += 2;
+          rhino.x += RHINO_RUNNING_SPEED;
           rhino.changeRhinoRunningAsset();
         } else if (skier.getPosition().x < rhino.x) {
-          rhino.x -= 2;
+          rhino.x -= RHINO_RUNNING_SPEED;
           rhino.changeRhinoRunningAsset();
         }
 
         if (skier.getPosition().y > rhino.y) {
-          rhino.y += 2;
+          rhino.y += RHINO_RUNNING_SPEED;
           rhino.changeRhinoRunningAsset();
         } else if (skier.getPosition().y < rhino.y) {
-          rhino.y -= 2;
+          rhino.y -= RHINO_RUNNING_SPEED;
           rhino.changeRhinoRunningAsset();
         }
 
@@ -138,29 +152,9 @@ export class RhinoManager {
     }
   }
 
-  calculateOpenPosition(minX, maxX, minY, maxY) {
-    const x = randomInt(minX, maxX);
-    const y = randomInt(minY, maxY);
-
-    const foundCollision = this.rhinos.find((rhino) => {
-      return (
-        x > rhino.x - DISTANCE_BETWEEN_RHINOS &&
-        x < rhino.x + DISTANCE_BETWEEN_RHINOS &&
-        y > rhino.y - DISTANCE_BETWEEN_RHINOS &&
-        y < rhino.y + DISTANCE_BETWEEN_RHINOS
-      );
-    });
-
-    if (foundCollision) {
-      return this.calculateOpenPosition(minX, maxX, minY, maxY);
-    } else {
-      return {
-        x: x,
-        y: y,
-      };
-    }
-  }
-
+  /* 
+    Function that stop all the rhinos movment on the screen but the one that caught the skier.
+  */
   stopRhinosRunning(rhinoThatCaughtTheSkier) {
     this.rhinos.map((rhino) => {
       if (rhino !== rhinoThatCaughtTheSkier) {

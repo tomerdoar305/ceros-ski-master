@@ -10,7 +10,7 @@ export class Skier extends Entity {
 
   // Added by Tomer.............
   jumpDirection = Constants.SKIER_DIRECTIONS.DOWN; //Init jump direction start
-  skierDistanceCounter = 0; //Counter distance for the skier 
+  skierDistanceCounter = 0; //Counter distance for the skier
   jumpCounter = 0; //Counter for skier jump
   //............................
 
@@ -94,14 +94,10 @@ export class Skier extends Entity {
         } else {
           this.setDirection(this.direction - 1);
         }
-      } 
+      }
     }
   }
 
-  /*
-    This function move the skier to the right only if the skier is not in jumping position 
-    (because he cant move right if he is in the air).
-  */
   turnRight() {
     if (this.direction !== Constants.SKIER_DIRECTIONS.JUMP) {
       if (this.direction === Constants.SKIER_DIRECTIONS.RIGHT) {
@@ -121,10 +117,6 @@ export class Skier extends Entity {
     }
   }
 
-  /*
-    This function move the skier down only if the skier is not in jumping position 
-    (because he cant move to diffrent directions if he is in the air).
-  */
   turnDown() {
     if (this.direction !== Constants.SKIER_DIRECTIONS.JUMP) {
       this.setDirection(Constants.SKIER_DIRECTIONS.DOWN);
@@ -177,35 +169,34 @@ export class Skier extends Entity {
     }
   }
 
-  //This is a function that count the distance of the skier.
+  // This is a function that count the distance of the skier.
   increaseSkierDistanceCounter() {
     this.skierDistanceCounter++;
   }
 
-  //This is a function that move the skier down after he got crashed by a rock or a tree
+  // This is a function that move the skier down after he got crashed by a rock or a tree
   moveSkierDownAfterCrashing() {
     this.y += Constants.SKIER_MOVING_FORWARD_DISTANCE_AFTER_CRASHING;
     this.increaseSkierDistanceCounter();
   }
 
   /* 
-   This is a finction that getting execute when the jump key is pressed.
-   It only get execute if the skier is not in jumping process and not crashed. 
+    This is a function that getting execute when the jump key is pressed.
+    Its only get execute if the skier is not in jumping process and not crashed. 
   */
   jump() {
     if (
       this.jumpCounter === 0 &&
       this.direction !== Constants.SKIER_DIRECTIONS.CRASH
     ) {
-      this.setJumpDirection(this.direction);
+      this.jumpDirection = this.direction;
       this.setDirection(Constants.SKIER_DIRECTIONS.JUMP);
     }
   }
 
-  setJumpDirection(direction) {
-    this.jumpDirection = direction;
-  }
-
+  /* 
+    This function is for setting the animations of the jump (when the skier is in the air)
+  */
   setJumpPosition() {
     if (0 <= this.jumpCounter && this.jumpCounter < 20) {
       this.setSkierToTheRightDirectionOnJump(false);
@@ -229,6 +220,9 @@ export class Skier extends Entity {
     }
   }
 
+  /* 
+    This function to move the skier to the right direction when he is jumping on the air
+  */
   setSkierToTheRightDirectionOnJump(endjump) {
     if (this.jumpDirection == Constants.SKIER_DIRECTIONS.LEFT_DOWN) {
       this.moveSkierLeftDown();
@@ -250,6 +244,9 @@ export class Skier extends Entity {
     }
   }
 
+  /* 
+    This function is to check if the if there is a rhino on the screen that caught the skier.
+  */
   checkIfSkierGetCaughtByRhino(rhinoManager, assetManager) {
     const asset = assetManager.getAsset(this.assetName);
     const skierBounds = new Rect(
@@ -273,10 +270,9 @@ export class Skier extends Entity {
     });
 
     if (rhinoThatCaughtTheSkier) {
-      console.log("Skier Get Catched By Rhino");
       rhinoThatCaughtTheSkier.changeRhinoCatchesSkierAsset();
       rhinoManager.stopRhinosRunning(rhinoThatCaughtTheSkier);
+      this.setDirection(Constants.SKIER_DIRECTIONS.CRASH);
     }
   }
-  //........................
 }

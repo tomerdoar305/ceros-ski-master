@@ -1,5 +1,5 @@
 import * as Constants from "../../Constants";
-import { randomInt } from "../../Core/Utils";
+import { randomInt, calculateOpenPosition } from "../../Core/Utils";
 import { Obstacle } from "./Obstacle";
 
 const DISTANCE_BETWEEN_OBSTACLES = 50;
@@ -44,8 +44,8 @@ export class ObstacleManager {
 
   placeNewObstacle(gameWindow, previousGameWindow) {
     const shouldPlaceObstacle = randomInt(1, NEW_OBSTACLE_CHANCE);
-    //Fixed by Tomer 8/17 - making sure that the previousGameWindow is not null.
-    //This can happen at the bigining of the game
+    // Making sure that the previousGameWindow is not null.
+    // This can happen at the bigining of the game
     if (shouldPlaceObstacle !== NEW_OBSTACLE_CHANCE || !previousGameWindow) {
       return;
     }
@@ -100,32 +100,16 @@ export class ObstacleManager {
   }
 
   placeRandomObstacle(minX, maxX, minY, maxY) {
-    const position = this.calculateOpenPosition(minX, maxX, minY, maxY);
+    const position = calculateOpenPosition(
+      minX,
+      maxX,
+      minY,
+      maxY,
+      this.obstacles,
+      DISTANCE_BETWEEN_OBSTACLES
+    );
     const newObstacle = new Obstacle(position.x, position.y);
 
     this.obstacles.push(newObstacle);
-  }
-
-  calculateOpenPosition(minX, maxX, minY, maxY) {
-    const x = randomInt(minX, maxX);
-    const y = randomInt(minY, maxY);
-
-    const foundCollision = this.obstacles.find((obstacle) => {
-      return (
-        x > obstacle.x - DISTANCE_BETWEEN_OBSTACLES &&
-        x < obstacle.x + DISTANCE_BETWEEN_OBSTACLES &&
-        y > obstacle.y - DISTANCE_BETWEEN_OBSTACLES &&
-        y < obstacle.y + DISTANCE_BETWEEN_OBSTACLES
-      );
-    });
-
-    if (foundCollision) {
-      return this.calculateOpenPosition(minX, maxX, minY, maxY);
-    } else {
-      return {
-        x: x,
-        y: y,
-      };
-    }
   }
 }
