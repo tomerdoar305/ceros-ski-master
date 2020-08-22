@@ -269,7 +269,7 @@ export class Skier extends Entity {
       return intersectTwoRects(skierBounds, rhinoBounds);
     });
 
-    if (rhinoThatCaughtTheSkier) {
+    if (rhinoThatCaughtTheSkier && this.direction !== Constants.SKIER_DIRECTIONS.JUMP) {
       rhinoThatCaughtTheSkier.changeRhinoCatchesSkierAsset();
       rhinoManager.stopRhinosRunning(rhinoThatCaughtTheSkier);
       this.setDirection(Constants.SKIER_DIRECTIONS.CRASH);
