@@ -104,5 +104,6 @@ export const KEYS = {
   //...Added by Tomer.....
   JUMP: 32,
   RESET_GAME: 27,
+  PAUSE: 80
   //......................
 };

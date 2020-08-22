@@ -35,25 +35,34 @@ export class Game {
   }
 
   updateGameWindow() {
-    this.skier.move();
-    const previousGameWindow = this.gameWindow;
-    this.calculateGameWindow();
-    this.obstacleManager.placeNewObstacle(this.gameWindow, previousGameWindow);
+    if (!this.skier.pauseGame) {
+      this.skier.move();
+      const previousGameWindow = this.gameWindow;
+      this.calculateGameWindow();
+      this.obstacleManager.placeNewObstacle(
+        this.gameWindow,
+        previousGameWindow
+      );
 
-    //This is a call to place new rhino or to move existing rhinos in the screen
-    this.rhinoManager.placeNewRhinoOrMoveExistingRhinos(
-      this.skier,
-      this.gameWindow,
-      previousGameWindow
-    );
+      //This is a call to place new rhino or to move existing rhinos in the screen
 
-    this.skier.checkIfSkierHitObstacle(this.obstacleManager, this.assetManager);
+      this.rhinoManager.placeNewRhinoOrMoveExistingRhinos(
+        this.skier,
+        this.gameWindow,
+        previousGameWindow
+      );
 
-    //This is a call to check if skier got caught by rhino
-    this.skier.checkIfSkierGetCaughtByRhino(
-      this.rhinoManager,
-      this.assetManager
-    );
+      this.skier.checkIfSkierHitObstacle(
+        this.obstacleManager,
+        this.assetManager
+      );
+
+      //This is a call to check if skier got caught by rhino
+      this.skier.checkIfSkierGetCaughtByRhino(
+        this.rhinoManager,
+        this.assetManager
+      );
+    }
   }
 
   drawGameWindow() {
@@ -80,29 +89,32 @@ export class Game {
   handleKeyDown(event) {
     switch (event.which) {
       case Constants.KEYS.LEFT:
-        this.skier.turnLeft();
+        !this.skier.pauseGame && this.skier.turnLeft();
         event.preventDefault();
         break;
       case Constants.KEYS.RIGHT:
-        this.skier.turnRight();
+        !this.skier.pauseGame && this.skier.turnRight();
         event.preventDefault();
         break;
       case Constants.KEYS.UP:
-        this.skier.turnUp();
+        !this.skier.pauseGame && this.skier.turnUp();
         event.preventDefault();
         break;
       case Constants.KEYS.DOWN:
-        this.skier.turnDown();
+        !this.skier.pauseGame && this.skier.turnDown();
         event.preventDefault();
         break;
 
       // Added by Tomer.........
       case Constants.KEYS.JUMP:
-        this.skier.jump();
+        !this.skier.pauseGame && this.skier.jump();
         event.preventDefault();
         break;
       case Constants.KEYS.RESET_GAME:
         this.resetGame();
+        break;
+      case Constants.KEYS.PAUSE:
+        this.skier.setPauseGame();
         break;
       //..........................
     }

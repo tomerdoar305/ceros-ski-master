@@ -9,9 +9,10 @@ export class Skier extends Entity {
   speed = Constants.SKIER_STARTING_SPEED;
 
   // Added by Tomer.............
-  jumpDirection = Constants.SKIER_DIRECTIONS.DOWN; //Init jump direction start
-  skierDistanceCounter = 0; //Counter distance for the skier
-  jumpCounter = 0; //Counter for skier jump
+  jumpDirection = Constants.SKIER_DIRECTIONS.DOWN; // Init jump direction start
+  skierDistanceCounter = 0; // Counter distance for the skier
+  jumpCounter = 0; // Counter for skier jump
+  pauseGame = false; // A flage to pause the game
   //............................
 
   constructor(x, y) {
@@ -25,6 +26,10 @@ export class Skier extends Entity {
 
   updateAsset() {
     this.assetName = Constants.SKIER_DIRECTION_ASSET[this.direction];
+  }
+
+  setPauseGame() {
+    this.pauseGame = this.pauseGame ? false : true;
   }
 
   move() {
@@ -269,7 +274,10 @@ export class Skier extends Entity {
       return intersectTwoRects(skierBounds, rhinoBounds);
     });
 
-    if (rhinoThatCaughtTheSkier && this.direction !== Constants.SKIER_DIRECTIONS.JUMP) {
+    if (
+      rhinoThatCaughtTheSkier &&
+      this.direction !== Constants.SKIER_DIRECTIONS.JUMP
+    ) {
       rhinoThatCaughtTheSkier.changeRhinoCatchesSkierAsset();
       rhinoManager.stopRhinosRunning(rhinoThatCaughtTheSkier);
       this.setDirection(Constants.SKIER_DIRECTIONS.CRASH);
