@@ -114,7 +114,7 @@ export class RhinoManager {
   }
 
   /* 
-    Navigate the Rhinos on the Game Window to run after the skier and catch him
+    Navigate the Rhinos on the game window to run after the skier and catch him
   */
   moveRhinosCloserToSkier(rhinosInTheGameWindow, skier) {
     for (var rhino of rhinosInTheGameWindow) {

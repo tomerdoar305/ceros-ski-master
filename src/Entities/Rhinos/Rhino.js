@@ -24,10 +24,16 @@ export class Rhino extends Entity {
     this.changeRhinoAssetCounter = 0;
   }
 
-  changeRhinoToDefaultAsset(){
+  /*
+    Setting the image of the rhino to be the default.
+  */
+  changeRhinoToDefaultAsset() {
     this.assetName = Constants.RHINO_DEFAULT;
   }
 
+  /*
+    Function to change the rhino running image (thats what make the running animation)
+  */
   changeRhinoRunningAsset() {
     if (this.changeRhinoAssetCounter === 10) {
       this.assetName === assetRunningTypes[0]
@@ -39,6 +45,9 @@ export class Rhino extends Entity {
     }
   }
 
+  /*
+    Function to change the rhino catching the skier images (thats what make the animation)
+  */
   changeRhinoCatchesSkierAsset() {
     if (this.changeRhinoAssetCounter < 50) {
       this.assetName = assetCatchSkierTypes[0];
