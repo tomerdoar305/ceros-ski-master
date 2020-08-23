@@ -206,31 +206,31 @@ export class Skier extends Entity {
   */
   setJumpPosition() {
     if (0 <= this.jumpCounter && this.jumpCounter < 20) {
-      this.setSkierToTheRightDirectionOnJump(false);
+      this.moveSkierToTheRightDirectionOnJump(false);
       this.assetName = Constants.SKIER_JUMP_2;
       this.jumpCounter++;
     } else if (20 <= this.jumpCounter && this.jumpCounter < 30) {
-      this.setSkierToTheRightDirectionOnJump(false);
+      this.moveSkierToTheRightDirectionOnJump(false);
       this.assetName = Constants.SKIER_JUMP_3;
       this.jumpCounter++;
     } else if (30 <= this.jumpCounter && this.jumpCounter < 40) {
-      this.setSkierToTheRightDirectionOnJump(false);
+      this.moveSkierToTheRightDirectionOnJump(false);
       this.assetName = Constants.SKIER_JUMP_4;
       this.jumpCounter++;
     } else if (40 <= this.jumpCounter && this.jumpCounter < 50) {
-      this.setSkierToTheRightDirectionOnJump(false);
+      this.moveSkierToTheRightDirectionOnJump(false);
       this.assetName = Constants.SKIER_JUMP_5;
       this.jumpCounter++;
     } else {
       this.jumpCounter = 0;
-      this.setSkierToTheRightDirectionOnJump(true);
+      this.moveSkierToTheRightDirectionOnJump(true);
     }
   }
 
   /* 
     This function to move the skier to the right direction when he is jumping on the air
   */
-  setSkierToTheRightDirectionOnJump(endjump) {
+  moveSkierToTheRightDirectionOnJump(endjump) {
     if (this.jumpDirection == Constants.SKIER_DIRECTIONS.LEFT_DOWN) {
       this.moveSkierLeftDown();
     } else if (this.jumpDirection == Constants.SKIER_DIRECTIONS.RIGHT_DOWN) {
@@ -280,7 +280,6 @@ export class Skier extends Entity {
       rhinoThatCaughtTheSkier &&
       this.direction !== Constants.SKIER_DIRECTIONS.JUMP
     ) {
-      
       rhinoThatCaughtTheSkier.changeRhinoCatchesSkierAsset(
         this.skierDistanceCounter
       );

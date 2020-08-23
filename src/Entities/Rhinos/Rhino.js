@@ -76,7 +76,7 @@ export class Rhino extends Entity {
     ) {
       this.assetName = assetCatchSkierTypes[4];
       this.changeRhinoAssetCounter++;
-    } else {
+    } else if (this.changeRhinoAssetCounter === 250) {
       this.assetName = assetCatchSkierTypes[5];
       this.move = false;
       alert(
@@ -84,7 +84,10 @@ export class Rhino extends Entity {
           `${skierDistanceCounter / 1000} miles.\n` +
           `Great job! click OK to try again.`
       );
+      this.changeRhinoAssetCounter++;
       location.reload();
+    } else {
+      return;
     }
   }
 }

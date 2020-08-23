@@ -111,7 +111,7 @@ This part of the document is to explain the solution for all the requirements ab
 
 I deploy a version of the game on server after doing all the requirements.
 You can play with it at:
-http://ossified-wine.surge.sh/
+http://symptomatic-fall.surge.sh/
 
 Or deploy it locally by running:
 
@@ -163,7 +163,7 @@ On this part I was doing all of this (and more):
 - I add functinalty to increase the speed the longer the skier skis.
 
 - I deployed the game on a server. This is the URL:
-  http://ossified-wine.surge.sh/
+  http://symptomatic-fall.surge.sh/
 
 - I wrote one more unit tests to test the jump functinalty:
   checking if the skier can change direction while he is on the air (when jumping)
