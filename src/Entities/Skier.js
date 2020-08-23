@@ -33,6 +33,8 @@ export class Skier extends Entity {
   }
 
   move() {
+    this.checkAndIncreaseSkierSpeed();
+
     switch (this.direction) {
       case Constants.SKIER_DIRECTIONS.LEFT_DOWN:
         this.moveSkierLeftDown();
@@ -281,6 +283,19 @@ export class Skier extends Entity {
       rhinoThatCaughtTheSkier.changeRhinoCatchesSkierAsset();
       rhinoManager.stopRhinosRunning(rhinoThatCaughtTheSkier);
       this.setDirection(Constants.SKIER_DIRECTIONS.CRASH);
+    }
+  }
+
+  /* 
+    This function is to increase the skier speed when he gets to certain distance.
+    (This is to increase the difficulty the longer the skier skis)
+  */
+  checkAndIncreaseSkierSpeed() {
+    if (this.skierDistanceCounter > 5000 && this.speed === 10) {
+      this.speed = 12;
+    }
+    else if (this.skierDistanceCounter > 10000 && this.speed === 12) {
+      this.speed = 14;
     }
   }
 }

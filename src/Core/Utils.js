@@ -61,6 +61,8 @@ export function calculateOpenPosition(
   }
 }
 
+
+// TODO - take it off
 export function testPromise() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
