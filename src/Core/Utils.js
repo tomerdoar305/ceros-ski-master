@@ -60,3 +60,12 @@ export function calculateOpenPosition(
     };
   }
 }
+
+export function testPromise() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("this is a test");
+    }, 2000);
+  });
+}
+
