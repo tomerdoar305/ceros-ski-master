@@ -48,7 +48,7 @@ export class Rhino extends Entity {
   /*
     Function to change the rhino catching the skier images (thats what make the animation)
   */
-  changeRhinoCatchesSkierAsset() {
+  changeRhinoCatchesSkierAsset(skierDistanceCounter) {
     if (this.changeRhinoAssetCounter < 50) {
       this.assetName = assetCatchSkierTypes[0];
       this.changeRhinoAssetCounter++;
@@ -76,7 +76,12 @@ export class Rhino extends Entity {
     ) {
       this.assetName = assetCatchSkierTypes[4];
       this.changeRhinoAssetCounter++;
-    } else {
+    } else if (this.changeRhinoAssetCounter === 250)
+    {
+      alert(`Your distance sking is ${skierDistanceCounter/1000} km`)
+      this.changeRhinoAssetCounter++;
+    }
+    else {
       this.assetName = assetCatchSkierTypes[5];
       this.move = false;
     }

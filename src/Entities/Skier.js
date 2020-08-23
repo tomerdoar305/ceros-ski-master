@@ -280,7 +280,7 @@ export class Skier extends Entity {
       rhinoThatCaughtTheSkier &&
       this.direction !== Constants.SKIER_DIRECTIONS.JUMP
     ) {
-      rhinoThatCaughtTheSkier.changeRhinoCatchesSkierAsset();
+      rhinoThatCaughtTheSkier.changeRhinoCatchesSkierAsset(this.skierDistanceCounter);
       rhinoManager.stopRhinosRunning(rhinoThatCaughtTheSkier);
       this.setDirection(Constants.SKIER_DIRECTIONS.CRASH);
     }
