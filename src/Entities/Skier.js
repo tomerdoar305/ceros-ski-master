@@ -280,7 +280,10 @@ export class Skier extends Entity {
       rhinoThatCaughtTheSkier &&
       this.direction !== Constants.SKIER_DIRECTIONS.JUMP
     ) {
-      rhinoThatCaughtTheSkier.changeRhinoCatchesSkierAsset(this.skierDistanceCounter);
+      
+      rhinoThatCaughtTheSkier.changeRhinoCatchesSkierAsset(
+        this.skierDistanceCounter
+      );
       rhinoManager.stopRhinosRunning(rhinoThatCaughtTheSkier);
       this.setDirection(Constants.SKIER_DIRECTIONS.CRASH);
     }
@@ -293,8 +296,7 @@ export class Skier extends Entity {
   checkAndIncreaseSkierSpeed() {
     if (this.skierDistanceCounter > 5000 && this.speed === 10) {
       this.speed = 12;
-    }
-    else if (this.skierDistanceCounter > 10000 && this.speed === 12) {
+    } else if (this.skierDistanceCounter > 10000 && this.speed === 12) {
       this.speed = 14;
     }
   }

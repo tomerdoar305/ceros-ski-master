@@ -76,14 +76,15 @@ export class Rhino extends Entity {
     ) {
       this.assetName = assetCatchSkierTypes[4];
       this.changeRhinoAssetCounter++;
-    } else if (this.changeRhinoAssetCounter === 250)
-    {
-      alert(`Your distance sking is ${skierDistanceCounter/1000} km`)
-      this.changeRhinoAssetCounter++;
-    }
-    else {
+    } else {
       this.assetName = assetCatchSkierTypes[5];
       this.move = false;
+      alert(
+        `GAME OVER \nYou were sking distance of ` +
+          `${skierDistanceCounter / 1000} miles.\n` +
+          `Great job! click OK to try again.`
+      );
+      location.reload();
     }
   }
 }
